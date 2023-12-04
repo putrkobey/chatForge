@@ -32,9 +32,10 @@ const LeaveServerModal = () => {
       const dataServer = await resServer.json();
 
       if (resServer.ok && dataServer.success) {
-        router.refresh();
         toast({ title: `Successfully leave from the server` });
         router.push("/");
+        router.refresh();
+        onClose();
       } else {
         toast({ title: dataServer.error });
       }
