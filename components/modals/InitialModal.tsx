@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import FileUpload from "@/components/file-upload";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BadgePlus, Boxes, Group, Loader2 } from "lucide-react";
+import { BadgePlus, Boxes, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
