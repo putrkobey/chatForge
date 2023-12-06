@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Loader2, LogOut, Trash, X } from "lucide-react";
+import { Loader2, Trash, X } from "lucide-react";
 import { useModal } from "@/hook/use-modal-store";
 import { Button } from "../ui/button";
 import { useState } from "react";
@@ -67,7 +67,7 @@ const DeleteServerModal = () => {
           <div className="flex flex-col items-start">
             <DialogFooter className="w-full gap-y-3 mt-4">
               <Button onClick={onClose} disabled={isLoading}>
-                Cancel <X className="w-4 h-4 ml-2" />
+                Cancel
               </Button>
               <Button
                 variant={"destructive"}
