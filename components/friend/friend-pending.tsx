@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import UserAvatar from "../user-avatar";
 import { ScrollArea } from "../ui/scroll-area";
 import { Button } from "../ui/button";
 import { checkFullName } from "@/lib/helper";
 import { Check, Gavel, Hourglass } from "lucide-react";
-import { Friend, Profile } from "@prisma/client";
+import { Profile } from "@prisma/client";
 import { useFriendQuery } from "@/hook/use-friend-query";
 import { Skeleton } from "../ui/skeleton";
 import { toast } from "../ui/use-toast";
@@ -17,6 +17,7 @@ interface FriendPendingProps {
 }
 
 const FriendPending = ({ profile }: FriendPendingProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const getFriendKey = `fri:${profile.id}`;
   const createFriendKey = `fri:${profile.id}:create`;
   const resFriendKey = `fri:${profile.id}:res`;
@@ -35,38 +36,58 @@ const FriendPending = ({ profile }: FriendPendingProps) => {
   });
 
   async function handleConfirm(friendOneId: string, friendTwoId: string) {
-    const res = await fetch("/api/socket/friends", {
-      method: "PUT",
-      body: JSON.stringify({ friendOneId, friendTwoId }),
-    });
-    const data = await res.json();
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/socket/friends", {
+        method: "PUT",
+        body: JSON.stringify({ friendOneId, friendTwoId }),
+      });
+      const data = await res.json();
 
-    if (res.ok && data.success) {
+      if (res.ok && data.success) {
+        toast({
+          title: "Successfully confirm",
+        });
+      } else {
+        toast({
+          title: data.error,
+        });
+      }
+    } catch (e: any) {
+      setIsLoading(true);
       toast({
-        title: "Successfully confirm",
+        title: "Something went wrong",
       });
-    } else {
-      toast({
-        title: data.error,
-      });
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function handleCancel(friendOneId: string, friendTwoId: string) {
-    const res = await fetch("/api/socket/friends", {
-      method: "DELETE",
-      body: JSON.stringify({ friendOneId, friendTwoId }),
-    });
-    const data = await res.json();
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/socket/friends", {
+        method: "DELETE",
+        body: JSON.stringify({ friendOneId, friendTwoId }),
+      });
+      const data = await res.json();
 
-    if (res.ok && data.success) {
+      if (res.ok && data.success) {
+        toast({
+          title: "Successfully cancel friend request",
+        });
+      } else {
+        toast({
+          title: data.error,
+        });
+      }
+    } catch (e: any) {
+      setIsLoading(true);
       toast({
-        title: "Successfully cancel request",
+        title: "Something went wrong",
       });
-    } else {
-      toast({
-        title: data.error,
-      });
+    } finally {
+      setIsLoading(false);
     }
   }
 
