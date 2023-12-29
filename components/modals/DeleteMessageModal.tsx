@@ -12,12 +12,10 @@ import { Loader2, Trash, X } from "lucide-react";
 import { useModal } from "@/hook/use-modal-store";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import qs from "query-string";
 
 const DeleteMessageModal = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onClose, type, data } = useModal();
   const { server, apiUrl, query } = data;
